@@ -76,7 +76,25 @@ public class SalesItemTest
         SalesItem salesIte1 = new SalesItem("Brain Surgery for Dummies.", 9899);
         assertEquals(true, salesIte1.addComment("Fred", "Great - I perform brain surgery every week now!", 4));
     }
+
+    @Test
+    public void testFindMostHelpfulComment()
+    {
+        SalesItem salesIte1 = new SalesItem("Clothes", 6000);
+        assertEquals(true, salesIte1.addComment("person1", "Great", 4));
+        assertEquals(true, salesIte1.addComment("person2", "Eww", 4));
+        assertEquals(true, salesIte1.addComment("person3", "Amazing", 5));
+        salesIte1.upvoteComment(1);
+        salesIte1.upvoteComment(1);
+        salesIte1.upvoteComment(1);
+        Comment comment1 = salesIte1.findMostHelpfulComment();
+        assertNotNull(comment1);
+        assertEquals("person2", comment1.getAuthor());
+        assertEquals(4, comment1.getRating());
+        assertEquals(3, comment1.getVoteCount());
+    }
 }
+
 
 
 

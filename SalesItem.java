@@ -25,7 +25,16 @@ public class SalesItem
     {
         this.name = name;
         this.price = price;
-        comments = new ArrayList<>();
+        comments = new ArrayList<Comment>();
+    }
+    
+    public SalesItem() {
+        this.name = "Clothes";
+        this.price = 6000;
+        comments = new ArrayList<Comment>();
+        comments.add(new Comment("person1", "Great", 4));
+        comments.add(new Comment("person2", "Eww", 4));
+        comments.add(new Comment("person3", "Amazing", 5));
     }
 
     /**
@@ -115,9 +124,16 @@ public class SalesItem
         System.out.println("Price: " + priceString(price));
         System.out.println();
         System.out.println("Customer comments:");
-        for(Comment comment : comments) {
+        // for(Comment comment : comments) {
+            // System.out.println("-------------------------------------------");
+            // System.out.println(comment.getFullDetails());
+        // }
+        int index = 0;
+        while(index < comments.size()) {
+            Comment comment = comments.get(index);
             System.out.println("-------------------------------------------");
             System.out.println(comment.getFullDetails());
+            index++;
         }
         System.out.println();
         System.out.println("===========================================");
@@ -130,13 +146,23 @@ public class SalesItem
      */
     public Comment findMostHelpfulComment()
     {
-        Iterator<Comment> it = comments.iterator();
-        Comment best = it.next();
-        while(it.hasNext()) {
-            Comment current = it.next();
-            if(current.getVoteCount() > best.getVoteCount()) {
+        // Iterator<Comment> it = comments.iterator();
+        // Comment best = it.next();
+        // while(it.hasNext()) {
+            // Comment current = it.next();
+            // if(current.getVoteCount() > best.getVoteCount()) {
+                // best = current;
+            // }
+        // }
+        // return best;
+        int index = 0;
+        Comment best = comments.get(index);
+        while(index < comments.size()) {
+            Comment current = comments.get(index);
+            if(best.getVoteCount() <= current.getVoteCount()) {
                 best = current;
             }
+            index++;
         }
         return best;
     }
@@ -147,7 +173,7 @@ public class SalesItem
      */
     private boolean ratingInvalid(int rating)
     {
-        return rating < 0 || rating > 5;
+        return rating < 1 || rating > 5;
     }
     
     /**
@@ -157,10 +183,19 @@ public class SalesItem
      */
     private Comment findCommentByAuthor(String author)
     {
-        for(Comment comment : comments) {
-            if(comment.getAuthor().equals(author)) {
-                return comment;
+        // for(Comment comment : comments) {
+            // if(comment.getAuthor().equals(author)) {
+                // return comment;
+            // }
+        // }
+        // return null;
+        int index = 0;
+        while(index < comments.size()){
+            Comment checkAuthor = comments.get(index);
+            if(checkAuthor.getAuthor().equals(author)) {
+                return checkAuthor;
             }
+            index++;
         }
         return null;
     }
